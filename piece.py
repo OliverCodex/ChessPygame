@@ -8,8 +8,6 @@ class piece(pygame.sprite.Sprite):
     def __init__(self, file, column, row):
         pygame.sprite.Sprite.__init__(self)
         self.sprite = pygame.image.load(file)
-        self.movex = 0
-        self.movey = 0
         self.rect = self.sprite.get_rect()   
         spr_w = (88 - self.sprite.get_width()) / 2
         spr_h = (88 - self.sprite.get_height()) / 2
