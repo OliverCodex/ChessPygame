@@ -5,7 +5,7 @@ import sys
 class piece(pygame.sprite.Sprite):
 
     # Initialization 
-    def __init__(self, file, column, row):
+    def __init__(self, file, diagonal, straight, range, column, row):
         pygame.sprite.Sprite.__init__(self)
         self.sprite = pygame.image.load(file)
         self.rect = self.sprite.get_rect()   
@@ -16,42 +16,45 @@ class piece(pygame.sprite.Sprite):
         self.rect.y = y
         init.window.blit(self.sprite, self.rect)
         print(spr_w, spr_h, x, y)
+        if diagonal == True:
+            print()
+        if straight == True:
+            print()
+        if range == True:
+            print()
+    def select(self):
+        print()
+    # Movement rules, border, collision
+    #def moveDiagonal(self):
+        #print()
+    #def moveStraight(self):
+        #print()
     def moveLeft(self):
-        spr_w = (88 - self.sprite.get_width()) / 2
-        spr_h = (88 - self.sprite.get_height()) / 2
-        self.rect.x += -88
+        self.rect.x -= 88
         if self.rect.x < 8:
             self.rect.x += 88
-        column = (self.rect.x - spr_w - 8) /  88 + 1 
-        row = (self.rect.y - spr_h - 8) /  88 + 1
-        print(column, row)
     def moveRight(self):
-        spr_w = (88 - self.sprite.get_width()) / 2
-        spr_h = (88 - self.sprite.get_height()) / 2
         self.rect.x += 88
         if self.rect.x > 704:
             self.rect.x -= 88
-        column = (self.rect.x - spr_w - 8) /  88 + 1 
-        row = (self.rect.y - spr_h - 8) /  88 + 1
-        print(column, row)
     def moveUp(self):
-        spr_w = (88 - self.sprite.get_width()) / 2
-        spr_h = (88 - self.sprite.get_height()) / 2
-        self.rect.y += -88
+        self.rect.y -= 88
         if self.rect.y < 8:
             self.rect.y += 88
-        column = (self.rect.x - spr_w - 8) /  88 + 1 
-        row = (self.rect.y - spr_h - 8) /  88 + 1
-        print(column, row)
     def moveDown(self):
-        spr_w = (88 - self.sprite.get_width()) / 2
-        spr_h = (88 - self.sprite.get_height()) / 2
         self.rect.y += 88
         if self.rect.y > 704:
             self.rect.y -= 88
-        column = (self.rect.x - spr_w - 8) /  88 + 1 
-        row = (self.rect.y - spr_h - 8) /  88 +  1
-        print(column, row)
-    def update(self):
+
+    def update(self, left, right, up, down):
+        if left == True:
+            self.moveLeft()
+        if right == True:
+            self.moveRight()
+        if up == True:
+            self.moveUp()
+        if down == True:
+            self.moveDown()
         init.window.blit(self.sprite, self.rect)
+        
         

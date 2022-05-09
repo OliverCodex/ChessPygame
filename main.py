@@ -10,13 +10,12 @@ pygame.display.set_caption('Chess')
 
 window.blit(board_image, (0, 0))
 # Pieces
-black_king = piece("assets/black_king.png", 4, 1)
-black_rook = piece("assets/black_rook.png", 1, 1)
+black_king = piece("assets/black_king.png", True, True, False, 4, 1)
+black_rook = piece("assets/black_rook.png", False, True, True, 7, 1)
 
 piece_list = pygame.sprite.Group()
 piece_list.add(black_king, black_rook)
-pieceToSelect = ['king', 'rook']
-pieceSelected = pieceToSelect[0]
+
 
 main = True
 while main:
@@ -28,38 +27,11 @@ while main:
                     sys.exit()
                 finally:
                     main = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q or event.key == ord('q'):
-                        pieceSelected = 'rook'
-                if event.key == pygame.K_e or event.key == ord('e'):
-                        pieceSelected = 'king'
-                if event.key == pygame.K_LEFT or event.key == ord('a'):
-                    init.window.blit(init.board_image, (0, 0))
-                    if pieceSelected == 'king':
-                        black_king.moveLeft()
-                        if black_king.rect == black_rook.rect:
-                            black_king.rect.x += 88
-                    else:
-                        black_rook.moveLeft()
-                        if black_king.rect == black_rook.rect:
-                            black_king.rect.x += 88
-                if event.key == pygame.K_RIGHT or event.key == ord('d'):
-                    init.window.blit(init.board_image, (0, 0))
-                    if pieceSelected == 'king':
-                        black_king.moveRight()
-                    else:
-                        black_rook.moveRight()
-                if event.key == pygame.K_UP or event.key == ord('w'):
-                    init.window.blit(init.board_image, (0, 0))
-                    if pieceSelected == 'king':
-                        black_king.moveUp()
-                    else:
-                        black_rook.moveUp()
-                if event.key == pygame.K_UP or event.key == ord('s'):
-                    init.window.blit(init.board_image, (0, 0))
-                    if pieceSelected == 'king':
-                        black_king.moveDown()
-                    else:
-                       black_rook.moveDown()
-        piece_list.update()
+            if event.type == pygame.MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+                clicked_sprites = [s for s in piece_list if s.rect.collidepoint(pos)]
+                if clicked_sprites:
+                    window.blit(board_image, (0, 0))
+                    black_rook.update(True, False, False, False)
+        piece_list.update(False, False, False, False,)
         pygame.display.update()
